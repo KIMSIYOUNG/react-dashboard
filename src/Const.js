@@ -25,11 +25,13 @@ export const MOCK_DATA  = [
         id: 3,
         icon: "add.svg",
         name: "주문 등록",
+        path: "/order/register"
       },
       {
         id: 4,
         icon: "search.svg",
         name: "주문 검색",
+        path: "/order/list"
       }
     ]
   },

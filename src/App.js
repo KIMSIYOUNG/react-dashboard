@@ -20,8 +20,8 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   return (
-    <SideBarLayout header={<MainHeader/>} sideBar={<MainSideBar/>}>
-      <Router>
+    <Router>
+      <SideBarLayout header={<MainHeader/>} sideBar={<MainSideBar/>}>
         <Switch>
           <Route path="/order/register">
             <OrderRegisterView/>
@@ -30,9 +30,9 @@ const App = () => {
             <OrderListView/>
           </Route>
         </Switch>
-      </Router>
-      <GlobalStyle/>
-    </SideBarLayout>
+        <GlobalStyle/>
+      </SideBarLayout>
+    </Router>
   )
 };
 

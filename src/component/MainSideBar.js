@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { MOCK_DATA } from "../Const";
+import { Link } from "react-router-dom";
 
 
 const IconButton = styled.div`
@@ -37,7 +38,8 @@ const IconContainer = styled.div`
   ${({ isActive }) => isActive && "transform:scaleY(-1)"};  
 `
 
-const MenuItem = styled.div`
+const MenuItem = styled(Link)`
+  text-decoration: none;
   display: flex;
   padding-left: 10px;
   height: 50px;
@@ -46,6 +48,10 @@ const MenuItem = styled.div`
   font-weight:500;
   color: black;
   align-items:center;
+  
+  &:hover {
+    background-color: rgba(0,0,0,0.1);
+  };
 `
 
 
@@ -66,7 +72,7 @@ const MainSideBar = () => {
           </IconContainer>
           {m.name}
         </MenuHeader>
-        {m.toggle && m.menuItems.map(menu => <MenuItem key={menu.id}>
+        {m.toggle && m.menuItems.map(menu => <MenuItem key={menu.id} to={menu.path}>
           <IconContainer isItem>
             <IconButton url={menu.icon} width="15px" height="15px"/>
           </IconContainer>
