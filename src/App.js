@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -31,12 +31,15 @@ const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
 `
 
 const IconButton = styled.div`
-  background: ${({url}) => "url('./" + url + "')"};
+  background: ${({ url }) => "url('./" + url + "')"};
   background-size:100% 100%;
-  ${({width, height}) => `width:${width}; height:${height};`};
+  ${({ width, height }) => `width:${width}; height:${height};`};
 `
 
 const HeaderTitle = styled.div`
@@ -144,12 +147,16 @@ const MenuHeader = styled.div`
   font-size:16px;
   font-weight:700;
   color: #00cec9;
+  &:hover {
+    background-color: rgba(0,0,0,0.1);
+  };
 `
 
 const IconContainer = styled.div`  
   width: 100px;
   display: flex;
-  justify-content: ${({isItem}) => `${isItem && "center"}`}; 
+  justify-content: ${({ isItem }) => `${isItem && "center"}`};
+  ${({ isActive }) => isActive && "transform:scaleY(-1)"};  
 `
 
 const MenuItem = styled.div`
@@ -166,12 +173,94 @@ const MenuItem = styled.div`
 const SMain = styled.div`
   flex:5;
 `
+const initialMenuList = [
+  {
+    id: 1,
+    toggle: false,
+    name: "업주 관리",
+    menuItems: [
+      {
+        id: 1,
+        icon: "add.svg",
+        name: "업주 등록",
+      },
+      {
+        id: 2,
+        icon: "search.svg",
+        name: "업주 검색",
+      }
+    ]
+  },
+  {
+    id: 2,
+    toggle: false,
+    name: "주문 관리",
+    menuItems: [
+      {
+        id: 3,
+        icon: "add.svg",
+        name: "주문 등록",
+      },
+      {
+        id: 4,
+        icon: "search.svg",
+        name: "주문 검색",
+      }
+    ]
+  },
+  {
+    id: 3,
+    toggle: false,
+    name: "보정 금액 관리",
+    menuItems: [
+      {
+        id: 5,
+        icon: "add.svg",
+        name: "보정 금액 등록",
+      },
+      {
+        id: 6,
+        icon: "search.svg",
+        name: "보정 금액 검색",
+      }
+    ]
+  },
+  {
+    id: 4,
+    toggle: false,
+    name: "지급금 관리",
+    menuItems: [
+      {
+        id: 7,
+        icon: "add.svg",
+        name: "지급금 등록/삭제",
+      },
+      {
+        id: 8,
+        icon: "search.svg",
+        name: "지급금 조회",
+      }
+    ]
+  },
+]
 
 const App = () => {
+  const [menuListToggle, setMenuListToggle] = useState(true);
+  const [menuList, setMenuList] = useState(initialMenuList);
+
+  const showMenuLists = () => {
+    setMenuListToggle(!menuListToggle)
+  }
+
+  const changeMenuToggle = (id) => {
+    setMenuList(menuList.map(m => m.id === id ? ({ ...m, toggle: !m.toggle }) : m))
+  }
+
+  console.log(menuList)
   return (
     <AppContainer>
       <SHeader>
-        <MenuContainer>
+        <MenuContainer onClick={() => showMenuLists()}>
           <IconButton url={"menu-icon.svg"} width="24px" height="24px"/>
         </MenuContainer>
         <HeaderTitle>
@@ -191,91 +280,24 @@ const App = () => {
         </Information>
       </SHeader>
       <SBody>
-        <SideBar>
-          <MenuList>
-            <MenuHeader>
-              <IconContainer>
-                <IconButton url={"arrow.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              업주 관리
-            </MenuHeader>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"add.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              업주 등록
-            </MenuItem>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"search.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              업주 검색
-            </MenuItem>
-          </MenuList>
+        {menuListToggle && <SideBar>
+          {menuList.map(m => <MenuList key={m.id}>
+            <MenuHeader onClick={() => changeMenuToggle(m.id)}>
+              <IconContainer isActive={m.toggle}>
 
-          <MenuList>
-            <MenuHeader>
-              <IconContainer>
                 <IconButton url={"arrow.svg"} width="15px" height="15px"/>
               </IconContainer>
-              주문 관리
+              {m.name}
             </MenuHeader>
-            <MenuItem>
+            {m.toggle && m.menuItems.map(menu => <MenuItem key={menu.id}>
               <IconContainer isItem>
-                <IconButton url={"add.svg"} width="15px" height="15px"/>
+                <IconButton url={menu.icon} width="15px" height="15px"/>
               </IconContainer>
-              주문 등록
-            </MenuItem>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"search.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              주문 검색
-            </MenuItem>
-          </MenuList>
+              {menu.name}
+            </MenuItem>)}
+          </MenuList>)}
 
-          <MenuList>
-            <MenuHeader>
-              <IconContainer>
-                <IconButton url={"arrow.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              보정 금액 관리
-            </MenuHeader>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"add.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              보정 금액 등록
-            </MenuItem>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"search.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              보정 금액 검색
-            </MenuItem>
-          </MenuList>
-
-          <MenuList>
-            <MenuHeader>
-              <IconContainer>
-                <IconButton url={"arrow.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              지급금 관리
-            </MenuHeader>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"add.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              지급금 생성/삭제
-            </MenuItem>
-            <MenuItem>
-              <IconContainer isItem>
-                <IconButton url={"search.svg"} width="15px" height="15px"/>
-              </IconContainer>
-              지급금 조회
-            </MenuItem>
-          </MenuList>
-        </SideBar>
+        </SideBar>}
         <SMain>
           <MainTitle/>
           <MainContent/>
