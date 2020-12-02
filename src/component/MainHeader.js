@@ -6,8 +6,8 @@ const HeaderTitle = styled.div`
   flex:1;
   display: flex;
   align-items: center;
-  font-size:18px;
-  font-weight:600;
+  font-size:22px;
+  font-weight:400;
   color: white;
 `
 
