@@ -110,14 +110,26 @@ const CircleButton = styled.div`
 
 const SBody = styled.div`
   background-color:white;
-  height:100%;
+  height:calc(100% - 80px);
   display: flex;
 `
 
-const MainTitle = styled.div`
+const MainTitle = styled.h1`
+  margin-bottom: 50px; 
 `
 
 const MainContent = styled.div`
+  display:flex;
+  flex-direction: column;
+  width: 500px;
+`
+
+const SubmitButton = styled.div`
+  background: url("./check.svg");
+  background-size: 100% 100%;
+  width: 40px;
+  height: 40px;
+  align-self: flex-end;
 `
 
 const Divider = styled.div`
@@ -129,6 +141,10 @@ const SideBar = styled.div`
   flex: 1;
   background-color: white;
   border-right: 1px solid #ddd;
+  display:flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 100%;
 `
 
 const MenuList = styled.div`
@@ -172,11 +188,167 @@ const MenuItem = styled.div`
 
 const SMain = styled.div`
   flex:5;
+  
+  padding-left: 100px;
+  padding-top: 40px;
+  background-color: #f5f5f5;
+  height: 100%;
+  overflow: scroll;
 `
+
+const InputField = styled.div`
+  display: flex;
+  align-items:center;
+`
+
+const VerticalDivider = styled.div`
+  margin: 20px 0;
+`
+
+const InputIcon = styled.div`
+  background: ${({ icon }) => `url(./${icon})`};
+  background-size: 100% 100%;
+  width: 20px;
+  height: 20px;
+  margin: 10px;
+`
+
+const InputArea = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`
+
+const InputAreaTitle = styled.div`
+  font-size: 14px;
+  color: #aaa;
+`
+
+const Select = styled.select`
+  margin: 10px 0;
+  flex:1;
+  background-color:transparent;
+  outline: none;
+  border: 0;
+`
+
+const InfoBox = styled.div`
+  padding: 10px;
+  border-radius:5px;
+  background-color: #ddd;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const InputAreaBoxContainer = styled.div`
+  display: flex;
+  border-bottom: 3px solid #ccc;
+  margin: 10px 0;
+  align-items: center;
+  
+`
+
+const InputAreaBox = styled.input`
+  flex: 1;
+  appearance: none;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+`
+
+const InputClearButton = styled.div`
+  background: url("./cancel.svg");
+  background-size: 100% 100%;
+  width: 12px;
+  height: 12px;
+`
+
+const InputAreaDescription = styled.div`
+  font-size: 14px;
+  color: #aaa;
+`
+
+const RegisterNumberField = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const RegisterName = styled.div`
+  font-size: 15px;
+  color: black;
+  font-weight: 500;
+`
+
+const NamedBox = styled.fieldset`
+  display: flex;
+  align-items: center;
+  & > legend {
+    color: #aaa; 
+  };
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`
+
+
+const NumberField = styled.div`
+
+`
+
+const OrderField = styled.div`
+  display:flex;
+  flex-direction:column;
+`
+
+const SelectOrderBox = styled.div`
+  display:flex;
+`
+
+const RadioContainer = styled.label`
+  
+`
+
+const RadioButton = styled.input`
+  display:none;
+  
+  &:checked + div {
+    background-color:#81ecec;
+  };
+`
+
+const RadioBox = styled.div`
+  border: 2px solid #ccc;
+  padding: 15px;
+ 
+`
+const HorizontalContainer = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+`
+
+const PaymentContainer = styled.div`
+  width:70%;
+`
+const SelectBox = styled.div`
+  margin: 20px 0;
+`
+
+const PaymentField = styled.div`
+  display: flex;
+  margin: 10px;
+  
+  ${InfoBox} {
+    width: 20%;
+    margin-right: 20px;
+  } 
+`
+
 const initialMenuList = [
   {
     id: 1,
-    toggle: false,
+    toggle: true,
     name: "업주 관리",
     menuItems: [
       {
@@ -193,7 +365,7 @@ const initialMenuList = [
   },
   {
     id: 2,
-    toggle: false,
+    toggle: true,
     name: "주문 관리",
     menuItems: [
       {
@@ -210,7 +382,7 @@ const initialMenuList = [
   },
   {
     id: 3,
-    toggle: false,
+    toggle: true,
     name: "보정 금액 관리",
     menuItems: [
       {
@@ -227,7 +399,7 @@ const initialMenuList = [
   },
   {
     id: 4,
-    toggle: false,
+    toggle: true,
     name: "지급금 관리",
     menuItems: [
       {
@@ -239,6 +411,57 @@ const initialMenuList = [
         id: 8,
         icon: "search.svg",
         name: "지급금 조회",
+      }
+    ]
+  },
+  {
+    id: 5,
+    toggle: true,
+    name: "박영호 관리",
+    menuItems: [
+      {
+        id: 7,
+        icon: "add.svg",
+        name: "영호 등록/삭제",
+      },
+      {
+        id: 8,
+        icon: "search.svg",
+        name: "영호 조회",
+      }
+    ]
+  },
+  {
+    id: 6,
+    toggle: true,
+    name: "김호돌 관리",
+    menuItems: [
+      {
+        id: 7,
+        icon: "add.svg",
+        name: "호돌 등록/삭제",
+      },
+      {
+        id: 8,
+        icon: "search.svg",
+        name: "호돌 조회",
+      }
+    ]
+  },
+  {
+    id: 7,
+    toggle: true,
+    name: "시영 관리",
+    menuItems: [
+      {
+        id: 7,
+        icon: "add.svg",
+        name: "시영 등록/삭제",
+      },
+      {
+        id: 8,
+        icon: "search.svg",
+        name: "시영 조회",
       }
     ]
   },
@@ -256,7 +479,6 @@ const App = () => {
     setMenuList(menuList.map(m => m.id === id ? ({ ...m, toggle: !m.toggle }) : m))
   }
 
-  console.log(menuList)
   return (
     <AppContainer>
       <SHeader>
@@ -296,11 +518,110 @@ const App = () => {
               {menu.name}
             </MenuItem>)}
           </MenuList>)}
-
         </SideBar>}
+
+
         <SMain>
-          <MainTitle/>
-          <MainContent/>
+          <div>
+            <MainTitle>
+              주문 등록
+            </MainTitle>
+            <MainContent>
+              <InputField>
+                <InputIcon icon="calendar.svg"/>
+                <InputArea>
+                  <InputAreaTitle>주문 발생 일자</InputAreaTitle>
+                  <InputAreaBoxContainer>
+                    <InputAreaBox type={"date"}/>
+                    <InputClearButton/>
+                  </InputAreaBoxContainer>
+                  <InputAreaDescription>주문 등록 번호는 주문 발생 일자를 기준으로 부여됩니다.</InputAreaDescription>
+                </InputArea>
+              </InputField>
+              <VerticalDivider/>
+              <InputField>
+                <InputIcon icon="clock.svg"/>
+                <InputArea>
+                  <InputAreaTitle>주문 발생 시간</InputAreaTitle>
+                  <InputAreaBoxContainer>
+                    <InputAreaBox type={"time"}/>
+                    <InputClearButton/>
+                  </InputAreaBoxContainer>
+                </InputArea>
+              </InputField>
+
+              <VerticalDivider/>
+              <RegisterNumberField>
+                <RegisterName>업주 번호</RegisterName>
+                <NamedBox>
+                  <legend>업주 번호 앞자리</legend>
+                  <InputAreaBox/>
+                  <InputClearButton/>
+                </NamedBox>
+                -
+                <NamedBox>
+                  <legend>업주 번호 뒷자리</legend>
+                  <InputAreaBox/>
+                  <InputClearButton/>
+                </NamedBox>
+              </RegisterNumberField>
+              <VerticalDivider/>
+              <NumberField>
+                <NamedBox>
+                  <legend>주문 금액</legend>
+                  <InputAreaBox/>
+                  <InputClearButton/>
+                </NamedBox>
+              </NumberField>
+              <VerticalDivider/>
+              <OrderField>
+                <SelectOrderBox>
+                  <RadioContainer>
+                    <RadioButton type={"radio"} name={"order-type"} checked/>
+                    <RadioBox>정상 주문</RadioBox>
+                  </RadioContainer>
+                  <RadioContainer>
+                    <RadioButton type={"radio"} name={"order-type"}/>
+                    <RadioBox>취소 주문</RadioBox>
+                  </RadioContainer>
+                </SelectOrderBox>
+                <HorizontalContainer>
+                  <PaymentContainer>
+                    <SelectBox>
+                      <InputAreaTitle>결제 수단 선택(하나만 가능)</InputAreaTitle>
+                      <InputAreaBoxContainer>
+                        <Select>
+                          <option>결제수단을 선택해주세요.</option>
+                          <option>현금 결제</option>
+                          <option>카드 결제</option>
+                          <option>카카오 페이 결제</option>
+                        </Select>
+                      </InputAreaBoxContainer>
+                      <InputAreaDescription>해당 주문의 결제수단을 선택해주세요.</InputAreaDescription>
+                    </SelectBox>
+                  </PaymentContainer>
+                  <InfoBox>남은 금액 : 1000원</InfoBox>
+                </HorizontalContainer>
+                <PaymentField>
+                  <InfoBox>카드</InfoBox>
+                  <NamedBox>
+                    <legend>주문 금액</legend>
+                    <InputAreaBox/>
+                    <InputClearButton/>
+                  </NamedBox>
+                </PaymentField>
+                <PaymentField>
+                  <InfoBox>모바일</InfoBox>
+                  <NamedBox>
+                    <legend>주문 금액</legend>
+                    <InputAreaBox/>
+                    <InputClearButton/>
+                  </NamedBox>
+                </PaymentField>
+              </OrderField>
+              <SubmitButton/>
+            </MainContent>
+          </div>
         </SMain>
       </SBody>
 
